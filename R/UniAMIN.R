@@ -81,14 +81,14 @@ UniAMIN <- function(sample_data, significance_level, peak){
   }
   quantile_value <- quantile(sort(D_star_amin_values), probs = 1-significance_level)
   Aunimin <- min(c(
-    sapply(2:ceiling(num_datasets / 2), function(j) {
+    sapply(2:h, function(j) {
       (mean(sample_data[[j]]) - mean(sample_data[[j - 1]])) /
         sqrt(
           (var(sample_data[[j]]) / length(sample_data[[j]])) +
             (var(sample_data[[j - 1]]) / length(sample_data[[j - 1]]))
         )
     }),
-    sapply((ceiling(num_datasets / 2) + 1):num_datasets, function(j) {
+    sapply((h + 1):num_datasets, function(j) {
       (-mean(sample_data[[j]]) + mean(sample_data[[j - 1]])) /
         sqrt(
           (var(sample_data[[j]]) / length(sample_data[[j]])) +
@@ -103,6 +103,7 @@ UniAMIN <- function(sample_data, significance_level, peak){
   }
   return(paste("UniAMIN Critical value:", quantile_value, "; UniAMIN Test statistic:", Aunimin, "; Result:", result))
 }
+
 
 
 
